@@ -13,7 +13,7 @@ export const projects: Project[] = [
     image: agritayo_pic,
     technologies: ['React Native', 'Node.js', 'Supabase', 'Express', 'Supabase'],
     githubUrl: 'https://github.com/RafaelMEA/e-commerce-agritayo.git',
-    liveUrl: 'https://agritayo-demo.onrender.com/',
+    liveUrl: 'https://drive.google.com/file/d/1vP5R97cfUEBRtP9adEWpdzUVj2DFvBXk/view',
     features: [
       'User authentication and authorization',
       'Two-factor authentication (Text message)',
