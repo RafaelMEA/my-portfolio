@@ -93,9 +93,7 @@ const Skills: React.FC = () => {
               Always Learning
             </h3>
             <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Technology evolves rapidly, and I'm committed to continuous learning. Currently exploring 
-              cloud technologies, DevOps practices, and advanced React patterns to stay current with 
-              industry trends.
+            I believe in continuous growth and staying current with evolving technologies. Currently expanding my expertise in deployment, advanced problem-solving, and system design. I actively engage with the developer community through coding challenges, and exploring emerging industry trends.
             </p>
           </div>
         </div>

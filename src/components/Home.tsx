@@ -45,7 +45,7 @@ const Home: React.FC<HeroProps> = ({ setActiveSection }) => {
           </div>
 
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8">
-          I like writing clean code, solving problems, and improving how things work.
+          I'm a passionate software developer who loves creating efficient, maintainable code and building user-focused applications. I enjoy tackling complex problems, learning new technologies, and turning creative ideas into functional solutions that make a difference.
           </p>
 
           <div className="flex justify-center space-x-6 mb-12">

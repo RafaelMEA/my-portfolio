@@ -148,9 +148,7 @@ const Contact: React.FC = () => {
                 Open to Opportunities
               </h4>
               <p className="text-blue-100">
-                I'm currently seeking entry-level to junior developer positions.
-                If you're looking for a dedicated developer with fresh ideas and
-                strong technical skills, let's talk!
+              I'm actively seeking junior to mid-level developer positions where I can contribute to innovative projects while continuing to grow my skills. I'm particularly interested in collaborative environments that value clean code, continuous learning, and making a positive impact. Ready to bring dedication, fresh ideas, and strong problem-solving abilities to your team!
               </p>
             </div>
           </div>

@@ -95,11 +95,15 @@ const About: React.FC = () => {
         </div>
 
         <div className="mt-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 text-white text-center">
-          <h3 className="text-2xl font-bold mb-4">Ready to Make an Impact</h3>
+          <h3 className="text-2xl font-bold mb-4">
+            What I Bring as a Junior Developer
+          </h3>
           <p className="text-lg opacity-90 max-w-2xl mx-auto">
-            I'm excited to bring my technical skills, fresh perspective, and
-            enthusiasm for learning to a forward-thinking organization. Let's
-            build something amazing together!
+            Fresh Perspective & Modern Skills I bring up-to-date knowledge of
+            current development practices, modern frameworks, and industry
+            standards. My recent education combined with hands-on project
+            experience means I'm familiar with the latest tools and
+            methodologies that drive today's tech landscape.
           </p>
         </div>
       </div>

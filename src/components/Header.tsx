@@ -1,6 +1,6 @@
-import React from 'react';
-import { Moon, Sun, Menu, X } from 'lucide-react';
-import { useThemeContext } from '../contexts/ThemeContext';
+import React from "react";
+import { Moon, Sun, Menu, X, Download } from "lucide-react";
+import { useThemeContext } from "../contexts/ThemeContext";
 
 interface HeaderProps {
   activeSection: string;
@@ -12,17 +12,17 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'contact', label: 'Contact' }
+    { id: "home", label: "Home" },
+    { id: "about", label: "About" },
+    { id: "skills", label: "Skills" },
+    { id: "projects", label: "Projects" },
+    { id: "contact", label: "Contact" },
   ];
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
       setActiveSection(sectionId);
       setIsMenuOpen(false);
     }
@@ -33,7 +33,8 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="text-2xl font-bold text-gray-900 dark:text-white">
-            Rafael<span className="text-blue-600 dark:text-blue-400">.</span>
+            &lt;Paeng/&gt;
+            <span className="text-blue-600 dark:text-blue-400">.</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -44,8 +45,8 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection }) => {
                 onClick={() => scrollToSection(item.id)}
                 className={`text-sm font-medium transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400 ${
                   activeSection === item.id
-                    ? 'text-blue-600 dark:text-blue-400'
-                    : 'text-gray-700 dark:text-gray-300'
+                    ? "text-blue-600 dark:text-blue-400"
+                    : "text-gray-700 dark:text-gray-300"
                 }`}
               >
                 {item.label}
@@ -54,10 +55,38 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection }) => {
           </nav>
 
           <div className="flex items-center space-x-4">
+            {/* Desktop Download Button */}
+            <a
+              href="/Rafael-Martin-Aquino-Resume.pdf"
+              download="Rafael-Martin-Aquino-Resume.pdf"
+              className="hidden md:inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-200"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Download Resume"
+            >
+              <span className="flex items-center">
+                <span>Resume</span>
+                <Download size={16} className="ml-2" />
+              </span>
+            </a>
+
+            {/* Mobile Download Button */}
+            <a
+              href="/Rafael_Martin_Aquino_Resume.pdf"
+              download="Rafael_Martin_Aquino_Resume.pdf"
+              className="md:hidden p-2 rounded-lg bg-blue-600 dark:bg-blue-700 text-white hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Download CV"
+            >
+              <Download size={20} />
+            </a>
             <button
               onClick={toggleTheme}
               className="p-2 rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors duration-200"
-              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              aria-label={
+                isDark ? "Switch to light mode" : "Switch to dark mode"
+              }
             >
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
@@ -66,7 +95,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection }) => {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors duration-200"
-              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -83,8 +112,8 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection }) => {
                   onClick={() => scrollToSection(item.id)}
                   className={`text-left text-sm font-medium transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400 ${
                     activeSection === item.id
-                      ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-gray-700 dark:text-gray-300'
+                      ? "text-blue-600 dark:text-blue-400"
+                      : "text-gray-700 dark:text-gray-300"
                   }`}
                 >
                   {item.label}
