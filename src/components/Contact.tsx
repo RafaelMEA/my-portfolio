@@ -71,7 +71,7 @@ const Contact: React.FC = () => {
     {
       icon: <Linkedin className="w-6 h-6" />,
       label: "LinkedIn",
-      href: "www.linkedin.com/in/rafael-martin-aquino-17330b1a5",
+      href: "https://www.linkedin.com/in/rafael-martin-aquino-17330b1a5",
     },
 
   ];
