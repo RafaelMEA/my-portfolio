@@ -9,7 +9,7 @@ export const projects: Project[] = [
     id: '1',
     title: 'Agritayo: A Mobile and Web Platform for Real-Time Market Insights and Direct Farmer Trade (Mobile)',
     description: 'Full-stack e-commerce solution with React Native, Node.js, Express and Supabase',
-    longDescription: 'A mobile for real-time market insights and direct farmer trade that connects farmers with buyers and provides them with the tools they need to sell their products without intermediaries.',
+    longDescription: 'A e-commerce mobile application for real-time market insights and direct farmer trade that connects farmers with buyers and provides them with the tools they need to sell their products without intermediaries.',
     image: agritayo_pic,
     technologies: ['React Native', 'Node.js', 'Supabase', 'Express', 'Supabase'],
     githubUrl: 'https://github.com/RafaelMEA/e-commerce-agritayo.git',
