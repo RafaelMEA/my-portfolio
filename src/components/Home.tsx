@@ -36,7 +36,7 @@ const Home: React.FC<HeroProps> = ({ setActiveSection }) => {
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-4">
-            Software Developer
+            Full-Stack Developer
           </p>
 
           <div className="flex items-center justify-center text-gray-500 dark:text-gray-400 mb-8">
@@ -45,7 +45,7 @@ const Home: React.FC<HeroProps> = ({ setActiveSection }) => {
           </div>
 
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8">
-          I'm a passionate software developer who loves creating efficient, maintainable code and building user-focused applications. I enjoy tackling complex problems, learning new technologies, and turning creative ideas into functional solutions that make a difference.
+          I'm a passionate full-stack developer who loves creating efficient, maintainable code and building user-focused applications. I enjoy tackling complex problems, learning new technologies, and turning creative ideas into functional solutions that make a difference.
           </p>
 
           <div className="flex justify-center space-x-6 mb-12">
