@@ -1,130 +1,173 @@
-import React from "react";
-import { Moon, Sun, Menu, X, Download } from "lucide-react";
-import { useThemeContext } from "../contexts/ThemeContext";
+import { useCallback, useEffect, useState } from 'react';
+import { Download, Github, Linkedin, Menu, Moon, Shield, Sun, X } from 'lucide-react';
+import { useThemeContext } from '../hooks/useThemeContext';
+import { portfolio } from '../data/portfolio';
 
 interface HeaderProps {
   activeSection: string;
-  setActiveSection: (section: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection }) => {
+const NAV_ITEMS = [
+  { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'security', label: 'Security' },
+  { id: 'certifications', label: 'Certs' },
+  { id: 'contact', label: 'Contact' },
+];
+
+const scrollToSection = (sectionId: string) => {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
+
+export const Header = ({ activeSection }: HeaderProps) => {
   const { isDark, toggleTheme } = useThemeContext();
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { profile } = portfolio;
 
-  const navItems = [
-    { id: "home", label: "Home" },
-    { id: "about", label: "About" },
-    { id: "skills", label: "Skills" },
-    { id: "projects", label: "Projects" },
-    { id: "contact", label: "Contact" },
-  ];
+  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setActiveSection(sectionId);
-      setIsMenuOpen(false);
-    }
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeMenu();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isMenuOpen, closeMenu]);
+
+  const handleNav = (id: string) => {
+    closeMenu();
+    scrollToSection(id);
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-gray-200 dark:border-slate-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          <div className="text-2xl font-bold text-gray-900 dark:text-white">
-            &lt;Paeng/&gt;
-            <span className="text-blue-600 dark:text-blue-400">.</span>
-          </div>
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-md dark:border-night-700/60 dark:bg-night-950/80">
+      <div className="mx-auto flex h-16 max-w-8xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <a
+          href="#home"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNav('home');
+          }}
+          className="group flex items-center gap-2.5"
+          aria-label="Back to top"
+        >
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-night-900 ring-1 ring-brand-500/40 dark:bg-night-800">
+            <Shield className="h-5 w-5 text-brand-400" />
+          </span>
+          <span className="font-mono text-sm font-semibold text-slate-900 dark:text-white">
+            Rafael<span className="text-brand-500">.Aquino</span>
+          </span>
+        </a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            {navItems.map((item) => (
-              <button
+        <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Primary">
+          {NAV_ITEMS.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNav(item.id);
+              }}
+              aria-current={activeSection === item.id ? 'true' : undefined}
+              className={`rounded-md px-2.5 py-2 text-sm font-medium transition-colors ${
+                activeSection === item.id
+                  ? 'text-brand-600 dark:text-brand-400'
+                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+              }`}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <a
+            href={profile.resumePdf}
+            download="Rafael-Aquino-Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden items-center gap-2 rounded-lg bg-brand-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-600 md:inline-flex"
+          >
+            <Download className="h-4 w-4" />
+            Resume
+          </a>
+          <a
+            href={profile.socials.github.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub profile"
+            className="hidden rounded-lg p-2 text-slate-500 transition-colors hover:text-slate-900 xl:block dark:text-slate-400 dark:hover:text-white"
+          >
+            <Github className="h-5 w-5" />
+          </a>
+          <a
+            href={profile.socials.linkedin.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn profile"
+            className="hidden rounded-lg p-2 text-slate-500 transition-colors hover:text-slate-900 xl:block dark:text-slate-400 dark:hover:text-white"
+          >
+            <Linkedin className="h-5 w-5" />
+          </a>
+          <button
+            onClick={toggleTheme}
+            className="rounded-lg p-2 text-slate-600 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-night-800"
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          </button>
+          <button
+            onClick={() => setIsMenuOpen((v) => !v)}
+            className="rounded-lg p-2 text-slate-600 transition-colors hover:bg-slate-100 lg:hidden dark:text-slate-300 dark:hover:bg-night-800"
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
+          >
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+
+      {isMenuOpen && (
+        <div id="mobile-menu" className="border-t border-slate-200/70 bg-white/95 backdrop-blur-md lg:hidden dark:border-night-700/60 dark:bg-night-950/95">
+          <nav className="mx-auto max-w-8xl space-y-1 px-4 py-4 sm:px-6" aria-label="Mobile">
+            {NAV_ITEMS.map((item) => (
+              <a
                 key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`text-sm font-medium transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400 ${
+                href={`#${item.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNav(item.id);
+                }}
+                className={`block rounded-md px-3 py-2.5 text-base font-medium transition-colors ${
                   activeSection === item.id
-                    ? "text-blue-600 dark:text-blue-400"
-                    : "text-gray-700 dark:text-gray-300"
+                    ? 'bg-brand-500/10 text-brand-600 dark:text-brand-400'
+                    : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-night-800'
                 }`}
               >
                 {item.label}
-              </button>
+              </a>
             ))}
+            <a
+              href={profile.resumePdf}
+              download="Rafael-Aquino-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-brand-500 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+            >
+              <Download className="h-4 w-4" />
+              Download Resume
+            </a>
           </nav>
-
-          <div className="flex items-center space-x-4">
-            {/* Desktop Download Button */}
-            <a
-              href="/Rafael-Martin-Aquino-Resume.pdf"
-              download="Rafael-Martin-Aquino-Resume.pdf"
-              className="hidden md:inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-200"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Download Resume"
-            >
-              <span className="flex items-center">
-                <span>Resume</span>
-                <Download size={16} className="ml-2" />
-              </span>
-            </a>
-
-            {/* Mobile Download Button */}
-            <a
-              href="/Rafael_Martin_Aquino_Resume.pdf"
-              download="Rafael_Martin_Aquino_Resume.pdf"
-              className="md:hidden p-2 rounded-lg bg-blue-600 dark:bg-blue-700 text-white hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Download CV"
-            >
-              <Download size={20} />
-            </a>
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors duration-200"
-              aria-label={
-                isDark ? "Switch to light mode" : "Switch to dark mode"
-              }
-            >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors duration-200"
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            >
-              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200 dark:border-slate-700">
-            <nav className="flex flex-col space-y-4">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`text-left text-sm font-medium transition-colors duration-200 hover:text-blue-600 dark:hover:text-blue-400 ${
-                    activeSection === item.id
-                      ? "text-blue-600 dark:text-blue-400"
-                      : "text-gray-700 dark:text-gray-300"
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </nav>
-          </div>
-        )}
-      </div>
+      )}
     </header>
   );
 };
-
-export default Header;

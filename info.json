@@ -1,0 +1,291 @@
+{
+    "profile": {
+        "name": "Rafael Martin E. Aquino",
+        "firstName": "Rafael Martin",
+        "lastName": "Aquino",
+        "headline": "Junior Software Developer | IT Support",
+        "roles": [
+            "Junior Software Developer",
+            "IT Support Professional",
+            "Aspiring Software Engineer",
+            "Aspiring SOC Analyst"
+        ],
+        "summary": "Computer Science graduate and full-stack developer with hands-on experience building and maintaining web applications using React, Vue.js, Node.js, Laravel, PHP, MySQL, and PostgreSQL. Experienced in IT support, system troubleshooting, application maintenance, and database management within a government environment. Currently building cybersecurity and SOC analyst capabilities through focused training in security fundamentals, networking, authentication, and log analysis.",
+        "about": [
+            "I'm a Computer Science graduate from the University of Baguio who builds reliable, user-focused web applications across the full stack. I split my time between software development and IT support work within a government environment, which has given me practical experience in building internal tools, maintaining systems, and solving real technical problems for end users.",
+            "Alongside development, I'm actively developing cybersecurity and SOC analyst skills. I'm focused on security fundamentals, networking, authentication and access control, and basic log analysis, with the goal of contributing to security operations as a SOC analyst."
+        ],
+        "focusPoints": [
+            {
+                "label": "Full-Stack Development",
+                "detail": "Web and mobile applications with React, Vue, Node.js and Laravel"
+            },
+            {
+                "label": "IT Support",
+                "detail": "Hardware and software troubleshooting in a government environment"
+            },
+            {
+                "label": "Cybersecurity / SOC",
+                "detail": "Building toward a SOC analyst role through Cisco training and labs"
+            }
+        ],
+        "location": "Baguio City, Benguet, Philippines",
+        "phone": "+63 912 410 7730",
+        "phoneHref": "tel:+639124107730",
+        "email": "rafaelmartineaquino@gmail.com",
+        "emailHref": "mailto:rafaelmartineaquino@gmail.com",
+        "availability": "Open to junior developer, IT support, and entry-level SOC positions",
+        "profileImage": "/images/profile_pic.png",
+        "resumePdf": "/documents/Rafael-Aquino-Resume.pdf",
+        "socials": {
+            "github": {
+                "label": "GitHub",
+                "url": "https://github.com/RafaelMEA",
+                "handle": "@RafaelMEA"
+            },
+            "linkedin": {
+                "label": "LinkedIn",
+                "url": "https://www.linkedin.com/in/rafael-martin-aquino-17330b1a5",
+                "handle": "Rafael Martin Aquino"
+            },
+            "facebook": {
+                "label": "Facebook",
+                "url": "https://www.facebook.com/paeengski"
+            }
+        }
+    },
+    "software_projects": [
+        {
+            "id": 1,
+            "proj_name": "DOLE GIP/SPES Portal",
+            "proj_link": "https://dole-portal.onrender.com/",
+            "proj_image": "Department_of_Labor_and_Employment_(DOLE).png",
+            "tech_stack": "TypeScript, Laravel, Tailwind, shadcn/ui, XAMPP, MySQL",
+            "description": "Web portal for the DOLE GIP/SPES program, built as part of internship work for a government environment."
+        },
+        {
+            "id": 2,
+            "proj_name": "Mental Health Check-In",
+            "proj_link": "https://mental-health-check-in-13eq.onrender.com/",
+            "proj_image": "VibeCheckLogo.png",
+            "tech_stack": "TypeScript, Express.js, Tailwind, shadcn/ui, Supabase, PostgreSQL",
+            "description": "Web-based system that enables employees to record and submit daily emotional well-being check-ins.",
+            "features": [
+                "Full-stack application built with TypeScript and Express.js",
+                "Responsive, user-friendly interface using Tailwind CSS and shadcn/ui",
+                "Daily emotional well-being check-in submissions"
+            ]
+        },
+        {
+            "id": 3,
+            "proj_name": "E-Commerce Mobile & Web Application",
+            "proj_link": "https://agritayo-demo.onrender.com/",
+            "proj_image": "agritayo_pic.png",
+            "tech_stack": "React Native, React.js, Node.js, PostgreSQL, Supabase, Tailwind CSS",
+            "description": "Platform designed to directly connect farmers and buyers, reducing reliance on intermediaries.",
+            "github_url": "https://github.com/RafaelMEA/e-commerce-agritayo.git",
+            "features": [
+                "Backend and frontend logic including RESTful APIs and CRUD operations",
+                "Reusable components improving development efficiency",
+                "Mobile and web frontends sharing a common platform"
+            ]
+        },
+        {
+            "id": 4,
+            "proj_name": "Inventory Management System",
+            "proj_link": "https://smartcity-inventorysystem.onrender.com/",
+            "proj_image": "inventory_pic.png",
+            "tech_stack": "Vue.js, Laravel, Node.js, MySQL, Tailwind CSS",
+            "github_url": "https://github.com/RafaelMEA/sccc-is.git",
+            "description": "Web-based inventory management system developed during the Smart City internship to improve tracking, accountability, and management of office equipment and supplies.",
+            "features": [
+                "Frontend and backend functionality including RESTful APIs and CRUD operations",
+                "Reusable components improving maintainability and development efficiency",
+                "Tracking and accountability for office equipment and supplies"
+            ]
+        }
+    ],
+    "cybersec_projects": [
+        {
+            "id": 1,
+            "proj_name": "SOC Lab SSH Bruteforce",
+            "proj_link": "https://soc-lab-ssh-bruteforce.netlify.app/",
+            "proj_image": "favicon.svg",
+            "tech_stack": "React.js, Tailwind",
+            "description": "SOC-focused lab project exploring SSH brute-force attack analysis."
+        }
+    ],
+    "cybersec_focus": {
+        "intro": "I'm building toward a SOC analyst role through structured training and hands-on practice. My current focus areas translate directly to the foundational work of a security operations center.",
+        "focusAreas": [
+            {
+                "title": "Security Fundamentals",
+                "icon": "shield",
+                "items": ["Cybersecurity fundamentals", "Threat awareness", "Cisco Networking Academy training"]
+            },
+            {
+                "title": "Authentication & Access Control",
+                "icon": "key",
+                "items": ["Authentication mechanisms", "Access control concepts", "Identity basics"]
+            },
+            {
+                "title": "Network Foundations",
+                "icon": "network",
+                "items": ["TCP/IP", "DNS", "DHCP", "LAN / Wi-Fi", "Basic network troubleshooting"]
+            },
+            {
+                "title": "Detection & Analysis",
+                "icon": "search",
+                "items": ["Basic log analysis", "Monitoring concepts", "Incident awareness"]
+            }
+        ]
+    },
+    "documents": [
+        {
+            "id": 1,
+            "img_name": "introduction-to-cybersecurity-badge.png",
+            "credly_link": "https://www.credly.com/badges/39bce3b0-5a23-4544-ab40-1a56d06f5da7/public_url",
+            "certification": "I2CSUpdate20260901-20-ki132i.pdf"
+        },
+        {
+            "id": 2,
+            "certification": "Getting_Started_with_Cisco_Packet_Tracer_certificate_rafaelmartineaquino-gmail-com_457dce92-77c8-4a46-b287-be1c535e78f8.pdf"
+        }
+    ],
+    "certifications": [
+        {
+            "name": "Introduction to Cybersecurity",
+            "organization": "Cisco Networking Academy",
+            "badge": "introduction-to-cybersecurity-badge.png",
+            "credlyLink": "https://www.credly.com/badges/39bce3b0-5a23-4544-ab40-1a56d06f5da7/public_url",
+            "documentPdf": "/documents/I2CSUpdate20260901-20-ki132i.pdf",
+            "icon": "shield-check",
+            "skills": ["Cybersecurity fundamentals", "Authentication & access control", "Basic log analysis", "Threat awareness"]
+        },
+        {
+            "name": "Getting Started with Cisco Packet Tracer",
+            "organization": "Cisco Networking Academy",
+            "badge": null,
+            "credlyLink": null,
+            "documentPdf": "/documents/Getting_Started_with_Cisco_Packet_Tracer_certificate_rafaelmartineaquino-gmail-com_457dce92-77c8-4a46-b287-be1c535e78f8.pdf",
+            "icon": "network",
+            "skills": ["Network simulation", "Basic network configuration", "TCP/IP concepts"]
+        }
+    ],
+    "for_experience": [
+        {
+            "id": 1,
+            "role": "IT Support (Intern)",
+            "company": "City Government of Baguio",
+            "img": "city-government-of-baguio-logo.png",
+            "period": "November 2025 - June 2026",
+            "type": "Government",
+            "tech": ["MySQL", "Laravel", "Node.js", "TypeScript", "Tailwind CSS", "shadcn/ui"],
+            "responsibilities": [
+                "Developed and maintained internal web-based applications to support office operations.",
+                "Diagnosed and resolved hardware and software issues for desktop computers, printers, and office equipment.",
+                "Installed, configured, and updated software applications on office workstations.",
+                "Assisted employees with IT-related concerns, system troubleshooting, and basic technical training.",
+                "Performed data encoding, maintained digital records, and ensured the accuracy of office databases.",
+                "Performed routine maintenance of computer systems and peripheral devices to ensure reliable operation."
+            ]
+        },
+        {
+            "id": 2,
+            "role": "Software Developer (Intern)",
+            "company": "Baguio City Smart City Command and Control Center",
+            "img": "baguio-smart-city.jpeg",
+            "period": "February 2025 - June 2025",
+            "type": "Government",
+            "tech": ["MySQL", "Laravel", "Node.js", "Vue.js", "Tailwind CSS"],
+            "responsibilities": [
+                "Developed a web-based inventory management system to improve tracking, accountability, and management of office equipment and supplies.",
+                "Implemented frontend and backend functionality, including RESTful APIs and CRUD operations.",
+                "Developed reusable components to improve application maintainability and development efficiency."
+            ]
+        }
+    ],
+    "education": [
+        {
+            "institution": "University of Baguio",
+            "degree": "Bachelor of Science in Computer Science",
+            "field": "Computer Science",
+            "period": null,
+            "extra": "Focused on software development, programming, and software engineering fundamentals."
+        },
+        {
+            "institution": "University of the Cordilleras",
+            "degree": "ICT - Information and Communication Technology",
+            "field": "Animation & Programming",
+            "period": null,
+            "extra": "First introduced to programming; covered animation and programming foundations."
+        }
+    ],
+    "skills": {
+        "categories": [
+            {
+                "title": "Software Development",
+                "icon": "code",
+                "groups": [
+                    {
+                        "label": "Languages",
+                        "items": ["JavaScript", "TypeScript", "PHP", "Python", "Java"]
+                    },
+                    {
+                        "label": "Frontend",
+                        "items": ["React.js", "React Native", "Vue.js", "HTML5", "CSS3", "Bootstrap", "Tailwind CSS"]
+                    },
+                    {
+                        "label": "Backend",
+                        "items": ["Node.js", "Laravel", "Express.js"]
+                    },
+                    {
+                        "label": "Databases",
+                        "items": ["PostgreSQL", "MySQL", "Supabase"]
+                    }
+                ]
+            },
+            {
+                "title": "IT Support",
+                "icon": "wrench",
+                "groups": [
+                    {
+                        "label": "Support",
+                        "items": ["Hardware & software troubleshooting", "System maintenance", "Software installation & configuration", "User support", "Printer & peripheral support"]
+                    }
+                ]
+            },
+            {
+                "title": "Cybersecurity",
+                "icon": "shield",
+                "groups": [
+                    {
+                        "label": "Security",
+                        "items": ["Cybersecurity fundamentals", "Authentication & access control", "Basic log analysis"]
+                    }
+                ]
+            },
+            {
+                "title": "Networking",
+                "icon": "network",
+                "groups": [
+                    {
+                        "label": "Networking",
+                        "items": ["TCP/IP", "DNS", "DHCP", "LAN / Wi-Fi", "Basic network troubleshooting"]
+                    }
+                ]
+            },
+            {
+                "title": "Tools & Workflow",
+                "icon": "tool",
+                "groups": [
+                    {
+                        "label": "Tools",
+                        "items": ["Git", "GitHub", "VS Code", "Postman", "XAMPP", "Microsoft Office", "AI-assisted development tools"]
+                    }
+                ]
+            }
+        ],
+        "softSkills": ["Problem solving", "Communication", "Teamwork", "Adaptability"]
+    }
+}

@@ -1,59 +1,198 @@
-import React, { useState } from 'react';
-import { projects } from '../data/portfolio';
-import { Github, ExternalLink, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ArrowUpRight, ExternalLink, Github, Plus, X } from 'lucide-react';
+import { portfolio } from '../data/portfolio';
+import type { SoftwareProject } from '../types';
+import { SectionHeading } from './SectionHeading';
+import { Reveal } from './Reveal';
 
-const Projects: React.FC = () => {
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+const isSvg = (src: string) => src.toLowerCase().endsWith('.svg');
 
-  const ProjectModal: React.FC<{ project: typeof projects[0] }> = ({ project }) => (
-    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white dark:bg-slate-900 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="relative">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-64 object-cover rounded-t-xl"
-          />
-          <button
-            onClick={() => setSelectedProject(null)}
-            className="absolute top-4 right-4 p-2 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors"
-          >
-            <X size={20} />
-          </button>
+const ProjectImage = ({
+  src,
+  alt,
+  className = '',
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) => {
+  if (isSvg(src)) {
+    return (
+      <div
+        role="img"
+        aria-label={alt}
+        className={`flex items-center justify-center bg-gradient-to-br from-brand-500/20 via-night-900 to-sky-600/20 ${className}`}
+      >
+        <img src={src} alt={alt} loading="lazy" className="h-14 w-14" />
+      </div>
+    );
+  }
+  return <img src={src} alt={alt} loading="lazy" className={`${className} object-cover`} />;
+};
+
+interface SoftwareProjectCardProps {
+  project: SoftwareProject;
+  onOpen: (project: SoftwareProject) => void;
+}
+
+const SoftwareProjectCard = ({ project, onOpen }: SoftwareProjectCardProps) => {
+  const techs = project.tech_stack.split(',').map((t) => t.trim()).filter(Boolean);
+
+  return (
+    <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all hover:-translate-y-1 hover:shadow-xl dark:border-night-700 dark:bg-night-800">
+      <ProjectImage
+        src={project.proj_image}
+        alt={`${project.proj_name} preview`}
+        className="h-44 w-full"
+      />
+      <div className="flex flex-1 flex-col p-6">
+        <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{project.proj_name}</h3>
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          {project.description}
+        </p>
+
+        <div className="mt-4 flex flex-wrap gap-2">
+          {techs.slice(0, 4).map((tech) => (
+            <span
+              key={tech}
+              className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-xs text-slate-600 dark:border-night-600 dark:bg-night-900 dark:text-slate-300"
+            >
+              {tech}
+            </span>
+          ))}
+          {techs.length > 4 && (
+            <span className="rounded-md px-2 py-0.5 font-mono text-xs text-slate-500 dark:text-slate-500">
+              +{techs.length - 4}
+            </span>
+          )}
         </div>
-        
-        <div className="p-8">
-          <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            {project.title}
+
+        <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-4 dark:border-night-700">
+          {project.proj_link && (
+            <a
+              href={project.proj_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-brand-500 px-3.5 py-2 text-xs font-semibold text-white transition-colors hover:bg-brand-600"
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+              Live Demo
+            </a>
+          )}
+          {project.github_url && (
+            <a
+              href={project.github_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-3.5 py-2 text-xs font-semibold text-slate-700 transition-colors hover:border-slate-500 dark:border-night-600 dark:text-slate-300 dark:hover:border-slate-400"
+            >
+              <Github className="h-3.5 w-3.5" />
+              Source
+            </a>
+          )}
+          {project.features && project.features.length > 0 && (
+            <button
+              onClick={() => onOpen(project)}
+              className="ml-auto inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold text-brand-600 transition-colors hover:bg-brand-500/10 dark:text-brand-400"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              Details
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+interface ProjectModalProps {
+  project: SoftwareProject;
+  onClose: () => void;
+}
+
+const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
+  const techs = useMemo(
+    () => project.tech_stack.split(',').map((t) => t.trim()).filter(Boolean),
+    [project.tech_stack]
+  );
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  const close = useCallback(() => onClose(), [onClose]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') close();
+    };
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    dialogRef.current?.focus();
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKey);
+      previouslyFocused?.focus();
+    };
+  }, [close]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="project-modal-title"
+    >
+      <button
+        aria-label="Close project details"
+        onClick={close}
+        className="absolute inset-0 cursor-default bg-night-950/70 backdrop-blur-sm"
+      />
+      <div
+        ref={dialogRef}
+        tabIndex={-1}
+        className="relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-2xl outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:border-night-600 dark:bg-night-800"
+      >
+        <button
+          onClick={close}
+          className="absolute top-4 right-4 z-10 rounded-full bg-night-950/50 p-2 text-white transition-colors hover:bg-night-950/80"
+          aria-label="Close"
+        >
+          <X className="h-4 w-4" />
+        </button>
+
+        <ProjectImage
+          src={project.proj_image}
+          alt={`${project.proj_name} preview`}
+          className="h-48 w-full"
+        />
+
+        <div className="p-6 sm:p-8">
+          <h3 id="project-modal-title" className="text-2xl font-bold text-slate-900 dark:text-white">
+            {project.proj_name}
           </h3>
-          
-          <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-            {project.longDescription}
-          </p>
+          <p className="mt-3 leading-relaxed text-slate-600 dark:text-slate-400">{project.description}</p>
 
-          <div className="mb-6">
-            <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-              Key Features
-            </h4>
-            <ul className="grid md:grid-cols-2 gap-2">
-              {project.features.map((feature, index) => (
-                <li key={index} className="flex items-start">
-                  <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                  <span className="text-gray-600 dark:text-gray-300">{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {project.features && project.features.length > 0 && (
+            <div className="mt-6">
+              <h4 className="font-semibold text-slate-900 dark:text-white">Highlights</h4>
+              <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+                {project.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400">
+                    <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 flex-none rounded-full bg-brand-500" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-          <div className="mb-6">
-            <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-              Technologies Used
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {project.technologies.map((tech, index) => (
+          <div className="mt-6">
+            <h4 className="font-semibold text-slate-900 dark:text-white">Technologies</h4>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {techs.map((tech) => (
                 <span
-                  key={index}
-                  className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm font-medium"
+                  key={tech}
+                  className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-xs text-slate-600 dark:border-night-600 dark:bg-night-900 dark:text-slate-300"
                 >
                   {tech}
                 </span>
@@ -61,27 +200,27 @@ const Projects: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-4">
-            {project.githubUrl && (
+          <div className="mt-8 flex flex-wrap gap-3 border-t border-slate-100 pt-6 dark:border-night-700">
+            {project.proj_link && (
               <a
-                href={project.githubUrl}
+                href={project.proj_link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center px-6 py-3 bg-gray-900 dark:bg-slate-700 text-white rounded-lg hover:bg-gray-800 dark:hover:bg-slate-600 transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
               >
-                <Github size={20} className="mr-2" />
-                View Code
+                <ExternalLink className="h-4 w-4" />
+                View Live Demo
               </a>
             )}
-            {project.liveUrl && (
+            {project.github_url && (
               <a
-                href={project.liveUrl}
+                href={project.github_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:border-slate-500 dark:border-night-600 dark:text-slate-300 dark:hover:border-slate-400"
               >
-                <ExternalLink size={20} className="mr-2" />
-                Live Demo
+                <Github className="h-4 w-4" />
+                View Source
               </a>
             )}
           </div>
@@ -89,82 +228,101 @@ const Projects: React.FC = () => {
       </div>
     </div>
   );
+};
+
+export const Projects = () => {
+  const { softwareProjects, cybersecProjects } = portfolio;
+  const [selectedProject, setSelectedProject] = useState<SoftwareProject | null>(null);
 
   return (
-    <section id="projects" className="py-20 bg-white dark:bg-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Featured Projects
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            A showcase of my development work, featuring full-stack applications built with modern technologies.
-          </p>
-        </div>
+    <section id="projects" className="scroll-mt-16 bg-slate-50 py-20 sm:py-24 dark:bg-night-950">
+      <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="projects"
+          title="Featured Projects"
+          description="Real-world applications built during academic, internship, and self-driven work."
+        />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="bg-gray-50 dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group"
-              onClick={() => setSelectedProject(project)}
-            >
-              <div className="relative overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <span className="text-white font-semibold">Click to view details</span>
-                </div>
-              </div>
-              
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  {project.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {project.description}
-                </p>
-                
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.technologies.slice(0, 3).map((tech, index) => (
-                    <span
-                      key={index}
-                      className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded text-xs font-medium"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.technologies.length > 3 && (
-                    <span className="px-2 py-1 bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-gray-400 rounded text-xs">
-                      +{project.technologies.length - 3} more
-                    </span>
-                  )}
-                </div>
+        <Reveal delay={80}>
+          <div className="mt-14 flex items-center gap-3">
+            <div className="h-px flex-1 bg-slate-200 dark:bg-night-700" />
+            <h3 className="font-mono text-sm font-medium tracking-wide text-slate-500 uppercase dark:text-slate-400">
+              Software Development
+            </h3>
+            <div className="h-px flex-1 bg-slate-200 dark:bg-night-700" />
+          </div>
+        </Reveal>
 
-                <div className="flex space-x-3">
-                  {project.githubUrl && (
-                    <button className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-                      <Github size={18} />
-                    </button>
-                  )}
-                  {project.liveUrl && (
-                    <button className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-                      <ExternalLink size={18} />
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
+        <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {softwareProjects.map((project, i) => (
+            <Reveal key={project.id} delay={(i % 3) * 80} className="min-w-0">
+              <SoftwareProjectCard project={project} onOpen={setSelectedProject} />
+            </Reveal>
           ))}
         </div>
 
-        {selectedProject && <ProjectModal project={selectedProject} />}
+        <Reveal delay={80}>
+          <div className="mt-16 flex items-center gap-3">
+            <div className="h-px flex-1 bg-slate-200 dark:bg-night-700" />
+            <h3 className="flex items-center gap-2 font-mono text-sm font-medium tracking-wide text-slate-500 uppercase dark:text-slate-400">
+              <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+              Security Lab
+            </h3>
+            <div className="h-px flex-1 bg-slate-200 dark:bg-night-700" />
+          </div>
+        </Reveal>
+
+        <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {cybersecProjects.map((project, i) => {
+            const techs = project.tech_stack.split(',').map((t) => t.trim()).filter(Boolean);
+            return (
+              <Reveal key={project.id} delay={i * 80} className="min-w-0">
+                <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all hover:-translate-y-1 hover:shadow-xl dark:border-night-700 dark:bg-night-800">
+                  <ProjectImage
+                    src={project.proj_image}
+                    alt={`${project.proj_name} preview`}
+                    className="h-40 w-full"
+                  />
+                  <div className="flex flex-1 flex-col p-6">
+                    <p className="font-mono text-xs font-medium tracking-wide text-brand-600 uppercase dark:text-brand-400">
+                      SOC Lab
+                    </p>
+                    <h3 className="mt-1 text-lg font-semibold text-slate-900 dark:text-white">{project.proj_name}</h3>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                      {project.description}
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {techs.map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-xs text-slate-600 dark:border-night-600 dark:bg-night-900 dark:text-slate-300"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    {project.proj_link && (
+                      <a
+                        href={project.proj_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-5 inline-flex items-center gap-1.5 self-start rounded-lg bg-emerald-600/90 px-3.5 py-2 text-xs font-semibold text-white transition-colors hover:bg-emerald-600"
+                      >
+                        <ArrowUpRight className="h-3.5 w-3.5" />
+                        Visit Lab
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
       </div>
+
+      {selectedProject && (
+        <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      )}
     </section>
   );
 };
-
-export default Projects;

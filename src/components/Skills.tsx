@@ -1,105 +1,85 @@
-import React from 'react';
-import { skills } from '../data/portfolio';
-import { Code, Database, Server, PenTool as Tool } from 'lucide-react';
+import { Briefcase, Code2, Network, Shield, Wrench, type LucideIcon } from 'lucide-react';
+import { portfolio } from '../data/portfolio';
+import { SectionHeading } from './SectionHeading';
+import { Reveal } from './Reveal';
 
-const Skills: React.FC = () => {
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'frontend':
-        return <Code className="w-6 h-6" />;
-      case 'backend':
-        return <Server className="w-6 h-6" />;
-      case 'database':
-        return <Database className="w-6 h-6" />;
-      case 'tools':
-        return <Tool className="w-6 h-6" />;
-      default:
-        return <Code className="w-6 h-6" />;
-    }
-  };
+const categoryIcons: Record<string, LucideIcon> = {
+  code: Code2,
+  wrench: Wrench,
+  shield: Shield,
+  network: Network,
+  tool: Wrench,
+  briefcase: Briefcase,
+};
 
-  const getCategoryTitle = (category: string) => {
-    switch (category) {
-      case 'frontend':
-        return 'Frontend Development';
-      case 'backend':
-        return 'Backend Development';
-      case 'database':
-        return 'Database Technologies';
-      case 'tools':
-        return 'Tools & Technologies';
-      default:
-        return category;
-    }
-  };
-
-  const categories = ['frontend', 'backend', 'database', 'tools'];
-
-  const SkillBar: React.FC<{ skill: any }> = ({ skill }) => (
-    <div className="mb-4">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-gray-900 dark:text-white font-medium">{skill.name}</span>
-        <span className="text-gray-600 dark:text-gray-400 text-sm">{skill.level}%</span>
-      </div>
-      <div className="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-2">
-        <div
-          className="h-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-1000 ease-out"
-          style={{ width: `${skill.level}%` }}
-        ></div>
-      </div>
-    </div>
-  );
+export const Skills = () => {
+  const { skills } = portfolio;
 
   return (
-    <section id="skills" className="py-20 bg-gray-50 dark:bg-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Technical Skills
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            A comprehensive overview of my technical expertise across various domains of software development.
-          </p>
-        </div>
+    <section id="skills" className="scroll-mt-16 bg-slate-50 py-20 sm:py-24 dark:bg-night-950">
+      <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
+        <SectionHeading
+          eyebrow="skills"
+          title="Technical Skills"
+          description="Skills built through software development, IT support work, and dedicated cybersecurity training."
+        />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {categories.map((category) => {
-            const categorySkills = skills.filter(skill => skill.category === category);
-            
+        <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {skills.categories.map((category, i) => {
+            const Icon = categoryIcons[category.icon] ?? Code2;
             return (
-              <div key={category} className="bg-white dark:bg-slate-900 rounded-xl p-6 shadow-lg">
-                <div className="flex items-center mb-6">
-                  <div className="text-blue-600 dark:text-blue-400 mr-3">
-                    {getCategoryIcon(category)}
+              <Reveal key={category.title} delay={(i % 3) * 80}>
+                <div className="h-full rounded-2xl border border-slate-200 bg-white p-6 transition-shadow hover:shadow-lg dark:border-night-700 dark:bg-night-800">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-brand-500/10 text-brand-600 dark:text-brand-400">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{category.title}</h3>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    {getCategoryTitle(category)}
-                  </h3>
+
+                  <div className="mt-5 space-y-4">
+                    {category.groups.map((group) => (
+                      <div key={group.label}>
+                        <p className="font-mono text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-slate-500">
+                          {group.label}
+                        </p>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {group.items.map((item) => (
+                            <span
+                              key={item}
+                              className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-sm text-slate-700 dark:border-night-600 dark:bg-night-900 dark:text-slate-300"
+                            >
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                
-                <div className="space-y-4">
-                  {categorySkills.map((skill, index) => (
-                    <SkillBar key={index} skill={skill} />
-                  ))}
-                </div>
-              </div>
+              </Reveal>
             );
           })}
         </div>
 
-        <div className="mt-16 text-center">
-          <div className="bg-white dark:bg-slate-900 rounded-xl p-8 shadow-lg">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-              Always Learning
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            I believe in continuous growth and staying current with evolving technologies. Currently expanding my expertise in deployment, advanced problem-solving, and system design. I actively engage with the developer community through coding challenges, and exploring emerging industry trends.
+        <Reveal delay={100}>
+          <div className="mt-10">
+            <p className="text-center font-mono text-xs font-medium tracking-widest text-slate-500 uppercase dark:text-slate-500">
+              Soft Skills
             </p>
+            <div className="mt-4 flex flex-wrap justify-center gap-2.5">
+              {skills.softSkills.map((skill) => (
+                <span
+                  key={skill}
+                  className="rounded-full border border-brand-500/40 bg-brand-500/5 px-4 py-1.5 text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
 };
-
-export default Skills;

@@ -1,12 +1,6 @@
-import { createContext, useContext, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { useTheme } from '../hooks/useTheme';
-
-type ThemeContextType = {
-  isDark: boolean;
-  toggleTheme: () => void;
-};
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+import { ThemeContext } from './themeContext';
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const { isDark, toggleTheme } = useTheme();
@@ -16,12 +10,4 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </ThemeContext.Provider>
   );
-};
-
-export const useThemeContext = () => {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('useThemeContext must be used within a ThemeProvider');
-  }
-  return context;
 };

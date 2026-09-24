@@ -1,0 +1,57 @@
+Rafael Martin E. Aquino
+Junior Software Developer | IT Support 
+Baguio City, Benguet, 2600, Philippines
++63 9124107730
+rafaelmartineaquino@gmail.com
+Portfolio | Github | LinkedIn
+Professional Summary
+Computer Science graduate and Full-Stack Developer with hands-on experience developing and maintaining web and mobile applications using React, Vue.js, Node.js, Laravel, PHP, MySQL, and PostgreSQL. Experienced in IT support, system troubleshooting, application maintenance, and database management within a government environment. A detail-oriented and adaptable professional with strong problem-solving skills, eager to contribute technical expertise and build reliable, user-focused software solutions.
+Education
+University of Baguio - Bachelor of Science in Computer Science
+University of Cordilleras - Information and Communication Technology (Animation & Programming)
+Experience
+IT Support
+Government - City Government of Baguio | November 2025 - June 2026
+Technologies: MySQL, Laravel, Node.js, TypeScript, Tailwind CSS, shadcn/ui
+Developed and maintained internal web-based applications to support office operations.
+Provided technical support by diagnosing and resolving hardware and software issues for desktop computers, printers, and office equipment.
+Installed, configured, and updated software applications on office workstations.
+Assisted employees with IT-related concerns, system troubleshooting, and basic technical training.
+Performed data encoding, maintained digital records, and ensured the accuracy of office databases.
+Performed routine maintenance of computer systems and peripheral devices to ensure reliable operation.
+Software Developer Intern
+Government - Baguio City Smart City Command and Control Center | February 2025 - June 2025
+Technologies: MySQL, Laravel, Node.js, Vue.js, Tailwind CSS
+Developed a web-based inventory management system to improve tracking, accountability, and management of office equipment and supplies.
+Implemented frontend and backend functionality, including RESTful APIs and CRUD operations.
+Developed reusable components to improve application maintainability and development efficiency.
+Selected Projects
+Mental Health Check-in System | Full-Stack Developer
+Technologies: TypeScript, Express.js, PostgreSQL, Supabase, Tailwind CSS, shadcn/ui
+Developed a web-based system that enables employees to record and submit daily emotional well-being check-ins.
+Built frontend and backend functionality using TypeScript and Express.js.
+Designed a responsive and user-friendly interface using Tailwind CSS and shadcn/ui.
+E-Commerce Mobile & Web Application - Full-Stack Developer
+Technologies: React Native, React.js, Node.js, PostgreSQL, Supabase, Tailwind CSS.
+Designed and developed a platform to directly connect farmers and buyers, reducing reliance on intermediaries.
+Developed both backend and frontend logic, including RESTful APIs and CRUD operations.
+Built reusable components, improving development efficiency.
+Blogging Web Application - Backend Developer
+Technologies: Laravel, PHP, MySQL, Bootstrap.
+Created a system where users can register, log in, and manage blog posts.
+Integrated a comment feature to increase user interaction.
+Data Analysis Project - Data Analyst/Python Developer
+Technologies: Python, MySQL, pandas, Matplotlib.
+Built a MySQL database and Python scripts for data cleaning and analysis with pandas.
+Automated reports and visualizations with Matplotlib to reveal trends and insights.
+
+Technical Skills
+Programming Languages: JavaScript, TypeScript, PHP, Python, Java
+Frontend: React.js, React Native, Vue.js, HTML5, CSS3, Bootstrap, Tailwind CSS
+Backend: Node.js, Laravel, Express.js
+Databases: PostgreSQL, MySQL, Supabase
+IT Support: Hardware/Software Troubleshooting, System Maintenance, Software Installation & Configuration, User Support, Printer & Peripheral Support
+Networking: TCP/IP, DNS, DHCP, LAN/Wi-Fi, Basic Network Troubleshooting
+Cybersecurity: Cybersecurity Fundamentals, Authentication & Access Control, Basic Log Analysis
+Tools & Technologies: Git, GitHub, VS Code, Postman, XAMPP, Microsoft Office, AI-Assisted Development Tools
+Soft Skills: Problem Solving, Communication, Teamwork, Adaptability
